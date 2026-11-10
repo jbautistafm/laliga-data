@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: int_team_matches
+    description: Cada partido jugado desde el punto de vista de cada equipo (dos filas por partido).
+    columns:
+      - name: result
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['V', 'E', 'D']
+      - name: points
+        tests:
+          - accepted_values:
+              arguments:
+                values: [0, 1, 3]
+                quote: false

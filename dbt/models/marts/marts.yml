@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: fct_matches
+    description: Un partido jugado por fila con su resultado al descanso y al final.
+    columns:
+      - name: match_id
+        tests: [unique, not_null]
+      - name: outcome
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['local', 'empate', 'visitante']
+
+  - name: fct_standings_by_matchday
+    description: Clasificación acumulada de cada equipo tras cada jornada.
+    columns:
+      - name: points
+        tests:
+          - value_between:
+              arguments:
+                min_value: 0
+                max_value: 114
+
+  - name: fct_final_standings
+    description: Clasificación tras la última jornada disponible de cada temporada.
+    columns:
+      - name: teams
+        description: LaLiga tiene 20 equipos desde 1997-98.
+        tests:
+          - accepted_values:
+              arguments:
+                values: [20]
+                quote: false
+
+  - name: mart_home_advantage
+    description: Porcentaje de victorias locales, empates y victorias visitantes por temporada, separando partidos sin público.
+
+  - name: mart_comebacks
+    description: Puntos ganados o perdidos en la segunda parte respecto al resultado del descanso, por equipo y temporada.

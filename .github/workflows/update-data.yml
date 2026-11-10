@@ -1,0 +1,47 @@
+name: Actualizar datos
+
+# Se ejecuta cada día a las 06:30 UTC (openfootball actualiza a las 05:00 UTC).
+# Si no hay partidos nuevos, no se hace ningún commit.
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Descargar partidos
+        run: python pipeline/download.py
+
+      - name: Construir y probar los modelos (dbt build)
+        working-directory: dbt
+        run: dbt build --profiles-dir .
+
+      - name: Exportar tablas
+        run: python pipeline/export_marts.py
+
+      - name: Guardar cambios
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw data/processed data/marts
+          if git diff --cached --quiet; then
+            echo "Sin partidos nuevos."
+          else
+            git commit -m "data: actualización automática $(date -u +%F)"
+            git push
+          fi

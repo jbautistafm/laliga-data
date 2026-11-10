@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Partidos de LaLiga descargados de openfootball/football.json (dominio público, CC0) por pipeline/download.py.
+    tables:
+      - name: matches
+        meta:
+          external_location: "../data/processed/matches.csv"

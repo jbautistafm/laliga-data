@@ -1,0 +1,6 @@
+duckdb>=1.1
+dbt-duckdb>=1.8
+pandas>=2.2
+matplotlib>=3.8
+streamlit>=1.38
+plotly>=5.22

@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_matches
+    description: Partidos de LaLiga (uno por fila) con nombres de equipo normalizados.
+    columns:
+      - name: match_id
+        tests: [unique, not_null]
+      - name: home_team
+        description: Si es nulo, falta el equipo en seeds/team_names.csv.
+        tests: [not_null]
+      - name: away_team
+        tests: [not_null]
+      - name: matchday
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38]
+                quote: false
+      - name: home_goals
+        tests:
+          - value_between:
+              arguments:
+                min_value: 0
+                max_value: 15

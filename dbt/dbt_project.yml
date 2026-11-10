@@ -1,0 +1,25 @@
+name: laliga
+version: "1.0.0"
+profile: laliga
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  laliga:
+    staging:
+      +materialized: table
+    intermediate:
+      +materialized: table
+    marts:
+      +materialized: table
+
+seeds:
+  laliga:
+    team_names:
+      +column_types:
+        team_raw: varchar
+        team: varchar
