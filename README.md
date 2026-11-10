@@ -2,6 +2,8 @@
 
 Pipeline de datos de LaLiga que **se actualiza solo**, con un modelo de datos en SQL probado con tests, tres análisis y un dashboard interactivo.
 
+### 👉 [Ver el dashboard en vivo](https://laliga-data.streamlit.app/)
+
 **Stack:** Python · SQL · dbt · DuckDB · pandas · Streamlit · Plotly · GitHub Actions
 
 ![Dashboard](docs/img/dashboard.png)
